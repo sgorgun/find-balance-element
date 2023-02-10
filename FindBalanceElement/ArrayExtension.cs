@@ -17,7 +17,51 @@ namespace FindBalanceElementTask
         /// <exception cref="ArgumentException">Thrown when source array is empty.</exception>
         public static int? FindBalanceElement(int[]? array)
         {
-            throw new NotImplementedException("You need to implement this method.");
+            {
+                if (array == null)
+                {
+                    throw new ArgumentNullException(nameof(array));
+                }
+
+                if (array == Array.Empty<int>())
+                {
+                    throw new ArgumentException($"{nameof(array)} is empty.", nameof(array));
+                }
+
+                if (array.Length is 1 or 2)
+                {
+                    return null;
+                }
+
+                if (array.Length == 3)
+                {
+                    return 1;
+                }
+
+                int? indexOfBalanceElement = null;
+                long leftSum = 0;
+                long rightSum = 0;
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    rightSum += array[i];
+                }
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    rightSum -= array[i];
+
+                    if (leftSum == rightSum)
+                    {
+                        indexOfBalanceElement = i;
+                        break;
+                    }
+
+                    leftSum += array[i];
+                }
+
+                return indexOfBalanceElement;
+            }
         }
     }
 }
